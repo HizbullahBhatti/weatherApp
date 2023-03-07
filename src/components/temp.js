@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import "./style.css"
+import WeatherCard from './weatherCard'
 
 const Temp = () => {
     const[searchValue, setSearchValue] = useState('karachi')
+    const[tempInfo,setTempInfo] = useState({})
 
     const getWeatherInfo = async () => {
         try {
@@ -18,11 +20,18 @@ const Temp = () => {
             const{country,sunset} = data.sys;
 
             const weatherData = {
-                temp,humidity,pressure,
+                temp,
+                humidity,
+                pressure,
                 weatherMood,
-                name,speed,
-                country,sunset
-            }
+                name,
+                speed,
+                country,
+                sunset
+            };
+
+            setTempInfo(weatherData)
+
         } catch (error) {
             console.log(error)
         }
@@ -48,68 +57,8 @@ const Temp = () => {
         </div>
     </div>
 
-    <article className="widget">
-        <div className="weatherIcon">
-            <i className="wi wi-day-sunny"></i>
-        </div>
-        <div className="weatherInfo">
-            <div className="temperature">
-                <span>25.5&deg;</span>
-            </div>
-            <div className="description">
-                <div className="weatherCondition">Sunny</div>
-                <div className="place">London, UK</div>
-            </div>
-        </div>
-        <div className="date">{new Date().toLocaleString()}</div>
-        
-        <div className="extra-temp">
-            <div className="temp-info-minmax">
-                <div className="two-sided-section">
-                    <p>
-                        <i className="wi wi-sunset"></i>
-                    </p>
-                    <p className="extra-info-leftside">
-                        18:00 PM<br/>
-                        Sunset
-                    </p>
-                </div>
+    <WeatherCard tempInfo={tempInfo}/>
 
-                <div className="two-sided-section">
-                    <p>
-                        <i className="wi wi-humidity"></i>
-                    </p>
-                    <p className="extra-info-leftside">
-                        18:00 PM<br/>
-                        Humidity
-                    </p>
-                </div>
-
-            </div>
-            <div className="weather-extra-info">
-            <div className="two-sided-section">
-                    <p>
-                        <i className="wi wi-rain"></i>
-                    </p>
-                    <p className="extra-info-leftside">
-                        18:00 PM<br/>
-                        Pressure
-                    </p>
-                </div>
-                <div className="two-sided-section">
-                    <p>
-                        <i className="wi wi-strong-wind"></i>
-                    </p>
-                    <p className="extra-info-leftside">
-                        18:00 PM<br/>
-                        Humidity
-                    </p>
-                </div>
-            </div>
-        </div>
-    </article>
-    
-    
     </>
   )
 }
