@@ -6,11 +6,23 @@ const Temp = () => {
 
     const getWeatherInfo = async () => {
         try {
-            let url = `https://api.openweathermap.org/data/2.5/weather?q=karachi&appid=0fcfcc5cf5682e7555b9d533e48365bd`
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid=0fcfcc5cf5682e7555b9d533e48365bd`
 
             const res = await fetch(url)
             const data = await res.json()
-            console.log(data)
+
+            const{temp,humidity,pressure} = data.main;
+            const{main : weatherMood} = data.weather[0];
+            const{name} = data;
+            const{speed} = data.wind; 
+            const{country,sunset} = data.sys;
+
+            const weatherData = {
+                temp,humidity,pressure,
+                weatherMood,
+                name,speed,
+                country,sunset
+            }
         } catch (error) {
             console.log(error)
         }
